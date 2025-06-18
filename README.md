@@ -153,12 +153,45 @@ npm install
 ### Running tests
 
 ```bash
-# Run Rust tests
+# Run all tests
 cargo test
 
+# Run specific test modules
+cargo test config::tests        # Config module tests
+cargo test cli::tests          # CLI module tests  
+cargo test hooks::tests        # Hooks module tests
+cargo test git::tests          # Git module tests
+
 # Run integration tests
-npm test
+cargo test --test integration_tests
+
+# Run unit tests only (no integration tests)
+cargo test --lib
+
+# Run tests with output
+cargo test -- --nocapture
 ```
+
+### Test Coverage
+
+rusky includes comprehensive test coverage:
+
+- **Unit Tests**: Test individual functions and modules
+  - `config.rs`: Configuration management tests
+  - `cli.rs`: CLI command logic tests
+  - `hooks.rs`: Hook file management tests
+  - `git.rs`: Git integration tests
+
+- **Integration Tests**: End-to-end testing of CLI commands
+  - Full workflow testing (init → add → commit → remove)
+  - Error handling and edge cases
+  - Cross-platform compatibility
+
+- **Test Features**:
+  - Isolated test environments using temporary directories
+  - Git repository simulation for testing
+  - Comprehensive error scenario coverage
+  - Performance and functionality validation
 
 ## 📄 License
 

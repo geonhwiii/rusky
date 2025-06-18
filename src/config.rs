@@ -6,7 +6,7 @@ use tokio::fs;
 
 const CONFIG_FILE: &str = ".rusky/config.json";
 
-#[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub struct Config {
     pub hooks: HashMap<String, String>,
     pub version: String,
@@ -64,5 +64,105 @@ impl Config {
     #[allow(dead_code)]
     pub fn has_hooks(&self) -> bool {
         !self.hooks.is_empty()
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use tempfile::TempDir;
+    use std::env;
+
+    #[tokio::test]
+    async fn test_config_default() {
+        let config = Config::default();
+        assert_eq!(config.version, "0.1.0");
+        assert!(config.hooks.is_empty());
+    }
+
+    #[tokio::test]
+    async fn test_add_hook() {
+        let mut config = Config::default();
+        config.add_hook("pre-commit".to_string(), "echo test".to_string());
+        
+        assert_eq!(config.hooks.len(), 1);
+        assert_eq!(config.hooks.get("pre-commit"), Some(&"echo test".to_string()));
+    }
+
+    #[tokio::test]
+    async fn test_remove_hook() {
+        let mut config = Config::default();
+        config.add_hook("pre-commit".to_string(), "echo test".to_string());
+        
+        let removed = config.remove_hook("pre-commit");
+        assert!(removed);
+        assert!(config.hooks.is_empty());
+        
+        let not_removed = config.remove_hook("non-existent");
+        assert!(!not_removed);
+    }
+
+    #[tokio::test]
+    async fn test_get_hook() {
+        let mut config = Config::default();
+        config.add_hook("pre-commit".to_string(), "echo test".to_string());
+        
+        assert_eq!(config.get_hook("pre-commit"), Some(&"echo test".to_string()));
+        assert_eq!(config.get_hook("non-existent"), None);
+    }
+
+    #[tokio::test]
+    async fn test_has_hooks() {
+        let mut config = Config::default();
+        assert!(!config.has_hooks());
+        
+        config.add_hook("pre-commit".to_string(), "echo test".to_string());
+        assert!(config.has_hooks());
+    }
+
+    #[tokio::test]
+    async fn test_save_and_load_config() {
+        let temp_dir = TempDir::new().unwrap();
+        let original_dir = env::current_dir().unwrap();
+        
+        // 임시 디렉토리로 이동
+        env::set_current_dir(temp_dir.path()).unwrap();
+        
+        // .rusky 디렉토리가 없는 상태에서 시작
+        if std::path::Path::new(".rusky").exists() {
+            tokio::fs::remove_dir_all(".rusky").await.unwrap();
+        }
+        
+        // 설정 생성 및 저장
+        let mut config = Config::default();
+        config.add_hook("pre-commit".to_string(), "echo test".to_string());
+        config.add_hook("pre-push".to_string(), "npm test".to_string());
+        
+        config.save().await.unwrap();
+        
+        // 설정 로드 및 검증
+        let loaded_config = Config::load().await.unwrap();
+        assert_eq!(loaded_config.hooks.len(), 2);
+        assert_eq!(loaded_config.hooks.get("pre-commit"), Some(&"echo test".to_string()));
+        assert_eq!(loaded_config.hooks.get("pre-push"), Some(&"npm test".to_string()));
+        assert_eq!(loaded_config.version, "0.1.0");
+        
+        // 원래 디렉토리로 복원
+        env::set_current_dir(original_dir).unwrap();
+    }
+
+    #[tokio::test]
+    async fn test_load_nonexistent_config() {
+        let temp_dir = TempDir::new().unwrap();
+        let original_dir = env::current_dir().unwrap();
+        
+        // 임시 디렉토리로 이동 (설정 파일이 없는 상태)
+        env::set_current_dir(temp_dir.path()).unwrap();
+        
+        let config = Config::load().await.unwrap();
+        assert_eq!(config, Config::default());
+        
+        // 원래 디렉토리로 복원
+        env::set_current_dir(original_dir).unwrap();
     }
 }

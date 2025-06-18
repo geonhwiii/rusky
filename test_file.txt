@@ -1,2 +1,0 @@
-# Test commit for rusky hook
-# Code cleanup completed
