@@ -1,13 +1,12 @@
 {
   "name": "@gunw.dan/rusky",
-  "version": "0.1.0",
-  "description": "Fast Git hooks manager written in Rust - A high-performance alternative to husky",
+  "version": "0.1.1",
+  "description": "Simple Git hooks manager written in Rust - A dependency-free alternative to husky",
   "main": "index.js",
   "bin": {
     "rusky": "./bin/rusky"
   },
   "scripts": {
-    "postinstall": "node install.js",
     "preuninstall": "node uninstall.js",
     "build": "cargo build --release",
     "test": "cargo test"
@@ -46,7 +45,6 @@
   ],
   "files": [
     "bin/",
-    "install.js",
     "uninstall.js",
     "README.md",
     "LICENSE"
