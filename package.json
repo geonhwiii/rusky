@@ -1,0 +1,54 @@
+{
+  "name": "rusky",
+  "version": "0.1.0",
+  "description": "Fast Git hooks manager written in Rust - A high-performance alternative to husky",
+  "main": "index.js",
+  "bin": {
+    "rusky": "./bin/rusky"
+  },
+  "scripts": {
+    "postinstall": "node install.js",
+    "preuninstall": "node uninstall.js",
+    "build": "cargo build --release",
+    "test": "cargo test"
+  },
+  "keywords": [
+    "git",
+    "hooks",
+    "husky",
+    "rust",
+    "performance",
+    "git-hooks",
+    "pre-commit",
+    "pre-push"
+  ],
+  "author": "Dan <dan@example.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dan/rusky.git"
+  },
+  "bugs": {
+    "url": "https://github.com/dan/rusky/issues"
+  },
+  "homepage": "https://github.com/dan/rusky#readme",
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "os": [
+    "darwin",
+    "linux",
+    "win32"
+  ],
+  "cpu": [
+    "x64",
+    "arm64"
+  ],
+  "files": [
+    "bin/",
+    "install.js",
+    "uninstall.js",
+    "README.md",
+    "LICENSE"
+  ]
+} 
