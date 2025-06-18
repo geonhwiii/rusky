@@ -1,4 +1,4 @@
-use anyhow::{Result, anyhow};
+use anyhow::{anyhow, Result};
 use colored::*;
 use std::path::Path;
 use tokio::fs;
@@ -10,7 +10,9 @@ use crate::hooks::HookManager;
 pub async fn init() -> Result<()> {
     // Git 저장소인지 확인
     if !Git::is_git_repo().await? {
-        return Err(anyhow!("Not a git repository. Please run 'git init' first."));
+        return Err(anyhow!(
+            "Not a git repository. Please run 'git init' first."
+        ));
     }
 
     // .rusky 디렉토리 생성
@@ -30,14 +32,17 @@ pub async fn init() -> Result<()> {
     println!("{}", "✅ Set up git hooks directory".green());
 
     println!("{}", "\n🎉 rusky initialized successfully!".bold().green());
-    println!("{}", "You can now add hooks with: rusky add <hook-name> <command>".dimmed());
+    println!(
+        "{}",
+        "You can now add hooks with: rusky add <hook-name> <command>".dimmed()
+    );
 
     Ok(())
 }
 
 pub async fn add_hook(hook_name: &str, command: &str) -> Result<()> {
     let mut config = Config::load().await?;
-    
+
     // 유효한 hook 이름인지 확인
     if !is_valid_hook_name(hook_name) {
         return Err(anyhow!("Invalid hook name: {}", hook_name));
@@ -48,15 +53,18 @@ pub async fn add_hook(hook_name: &str, command: &str) -> Result<()> {
 
     // Hook 파일 생성
     HookManager::create_hook_file(hook_name, command).await?;
-    
-    println!("{}", format!("✅ Added {} hook: {}", hook_name, command).green());
-    
+
+    println!(
+        "{}",
+        format!("✅ Added {} hook: {}", hook_name, command).green()
+    );
+
     Ok(())
 }
 
 pub async fn remove_hook(hook_name: &str) -> Result<()> {
     let mut config = Config::load().await?;
-    
+
     if config.remove_hook(hook_name) {
         config.save().await?;
         HookManager::remove_hook_file(hook_name).await?;
@@ -64,13 +72,13 @@ pub async fn remove_hook(hook_name: &str) -> Result<()> {
     } else {
         println!("{}", format!("⚠️  Hook {} not found", hook_name).yellow());
     }
-    
+
     Ok(())
 }
 
 pub async fn list_hooks() -> Result<()> {
     let config = Config::load().await?;
-    
+
     if config.hooks.is_empty() {
         println!("{}", "No hooks configured".dimmed());
         return Ok(());
@@ -78,44 +86,65 @@ pub async fn list_hooks() -> Result<()> {
 
     println!("{}", "Configured hooks:".bold());
     for (hook_name, command) in &config.hooks {
-        println!("  {} {}: {}", "•".blue(), hook_name.bold(), command.dimmed());
+        println!(
+            "  {} {}: {}",
+            "•".blue(),
+            hook_name.bold(),
+            command.dimmed()
+        );
     }
-    
+
     Ok(())
 }
 
 pub async fn install_hooks() -> Result<()> {
     let config = Config::load().await?;
-    
+
     for (hook_name, command) in &config.hooks {
         HookManager::create_hook_file(hook_name, command).await?;
     }
-    
-    println!("{}", format!("✅ Installed {} hooks", config.hooks.len()).green());
-    
+
+    println!(
+        "{}",
+        format!("✅ Installed {} hooks", config.hooks.len()).green()
+    );
+
     Ok(())
 }
 
 pub async fn uninstall_hooks() -> Result<()> {
     let config = Config::load().await?;
-    
+
     for hook_name in config.hooks.keys() {
         HookManager::remove_hook_file(hook_name).await?;
     }
-    
+
     println!("{}", "✅ Uninstalled all hooks".green());
-    
+
     Ok(())
 }
 
 fn is_valid_hook_name(hook_name: &str) -> bool {
     const VALID_HOOKS: &[&str] = &[
-        "applypatch-msg", "pre-applypatch", "post-applypatch",
-        "pre-commit", "prepare-commit-msg", "commit-msg", "post-commit",
-        "pre-rebase", "post-checkout", "post-merge", "pre-push",
-        "pre-receive", "update", "post-receive", "post-update",
-        "push-to-checkout", "pre-auto-gc", "post-rewrite"
+        "applypatch-msg",
+        "pre-applypatch",
+        "post-applypatch",
+        "pre-commit",
+        "prepare-commit-msg",
+        "commit-msg",
+        "post-commit",
+        "pre-rebase",
+        "post-checkout",
+        "post-merge",
+        "pre-push",
+        "pre-receive",
+        "update",
+        "post-receive",
+        "post-update",
+        "push-to-checkout",
+        "pre-auto-gc",
+        "post-rewrite",
     ];
-    
+
     VALID_HOOKS.contains(&hook_name)
-} 
+}

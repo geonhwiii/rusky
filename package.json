@@ -26,12 +26,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/dan/rusky.git"
+    "url": "https://github.com/geonhwiii/rusky.git"
   },
   "bugs": {
-    "url": "https://github.com/dan/rusky/issues"
+    "url": "https://github.com/geonhwiii/rusky/issues"
   },
-  "homepage": "https://github.com/dan/rusky#readme",
+  "homepage": "https://github.com/geonhwiii/rusky#readme",
   "engines": {
     "node": ">=14.0.0"
   },

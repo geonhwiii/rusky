@@ -1,13 +1,11 @@
+use anyhow::Result;
 use clap::{Parser, Subcommand};
 use colored::*;
-use anyhow::Result;
 
 mod cli;
+mod config;
 mod git;
 mod hooks;
-mod config;
-
-use cli::*;
 
 #[derive(Parser)]
 #[command(name = "rusky")]

@@ -1,4 +1,4 @@
-use anyhow::{Result, anyhow};
+use anyhow::{anyhow, Result};
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use std::path::Path;
@@ -30,7 +30,7 @@ impl Config {
         let content = fs::read_to_string(CONFIG_FILE).await?;
         let config: Config = serde_json::from_str(&content)
             .map_err(|e| anyhow!("Failed to parse config file: {}", e))?;
-        
+
         Ok(config)
     }
 
@@ -43,7 +43,7 @@ impl Config {
 
         let content = serde_json::to_string_pretty(self)
             .map_err(|e| anyhow!("Failed to serialize config: {}", e))?;
-        
+
         fs::write(CONFIG_FILE, content).await?;
         Ok(())
     }
@@ -56,11 +56,13 @@ impl Config {
         self.hooks.remove(hook_name).is_some()
     }
 
+    #[allow(dead_code)]
     pub fn get_hook(&self, hook_name: &str) -> Option<&String> {
         self.hooks.get(hook_name)
     }
 
+    #[allow(dead_code)]
     pub fn has_hooks(&self) -> bool {
         !self.hooks.is_empty()
     }
-} 
+}

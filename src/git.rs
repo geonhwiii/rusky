@@ -1,5 +1,5 @@
-use anyhow::{Result, anyhow};
-use std::path::{Path, PathBuf};
+use anyhow::{anyhow, Result};
+use std::path::PathBuf;
 use tokio::fs;
 use tokio::process::Command;
 
@@ -27,10 +27,8 @@ impl Git {
             return Err(anyhow!("Not in a git repository"));
         }
 
-        let path_str = String::from_utf8(output.stdout)?
-            .trim()
-            .to_string();
-        
+        let path_str = String::from_utf8(output.stdout)?.trim().to_string();
+
         Ok(PathBuf::from(path_str))
     }
 
@@ -43,7 +41,7 @@ impl Git {
     /// Git hooks 디렉토리 설정
     pub async fn setup_hooks_dir() -> Result<()> {
         let hooks_dir = Self::get_hooks_dir().await?;
-        
+
         if !hooks_dir.exists() {
             fs::create_dir_all(&hooks_dir).await?;
         }
@@ -58,12 +56,14 @@ impl Git {
     }
 
     /// Hook 파일이 존재하는지 확인
+    #[allow(dead_code)]
     pub async fn hook_exists(hook_name: &str) -> Result<bool> {
         let hook_path = Self::get_hook_path(hook_name).await?;
         Ok(hook_path.exists())
     }
 
     /// Git 설정 값 가져오기
+    #[allow(dead_code)]
     pub async fn get_config(key: &str) -> Result<Option<String>> {
         let output = Command::new("git")
             .args(&["config", "--get", key])
@@ -71,9 +71,7 @@ impl Git {
             .await?;
 
         if output.status.success() {
-            let value = String::from_utf8(output.stdout)?
-                .trim()
-                .to_string();
+            let value = String::from_utf8(output.stdout)?.trim().to_string();
             Ok(Some(value))
         } else {
             Ok(None)
@@ -81,6 +79,7 @@ impl Git {
     }
 
     /// Git 설정 값 설정하기
+    #[allow(dead_code)]
     pub async fn set_config(key: &str, value: &str) -> Result<()> {
         let output = Command::new("git")
             .args(&["config", key, value])
@@ -93,4 +92,4 @@ impl Git {
 
         Ok(())
     }
-} 
+}

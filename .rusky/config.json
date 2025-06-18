@@ -1,6 +1,6 @@
 {
   "hooks": {
-    "pre-commit": "echo 'Running pre-commit hook...'"
+    "pre-commit": "echo '🐺 rusky: Running pre-commit checks...'"
   },
   "version": "0.1.0"
 }
