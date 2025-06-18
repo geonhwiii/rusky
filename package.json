@@ -1,5 +1,5 @@
 {
-  "name": "@geonhwiii/rusky",
+  "name": "@gunw.dan/rusky",
   "version": "0.1.0",
   "description": "Fast Git hooks manager written in Rust - A high-performance alternative to husky",
   "main": "index.js",
@@ -51,4 +51,4 @@
     "README.md",
     "LICENSE"
   ]
-} 
+}

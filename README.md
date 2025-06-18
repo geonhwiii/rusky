@@ -1,41 +1,43 @@
 # 🐺 rusky
 
-**Fast Git hooks manager written in Rust** - A high-performance alternative to husky
+**Simple Git hooks manager written in Rust** - A dependency-free alternative to husky
 
-[![npm version](https://badge.fury.io/js/rusky.svg)](https://badge.fury.io/js/rusky)
+[![npm version](https://badge.fury.io/js/@gunw.dan/rusky.svg)](https://badge.fury.io/js/@gunw.dan/rusky)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## ✨ Features
 
-- 🚀 **Lightning Fast**: Written in Rust for maximum performance
-- 🔧 **Simple API**: Easy to use, just like husky
-- 📦 **Zero Dependencies**: No Node.js runtime dependencies
+- 🚀 **Drop-in Replacement**: Works exactly like husky - no learning curve
+- 🔧 **Simple Setup**: One command to get started
+- 📦 **Zero Runtime Dependencies**: No Node.js dependencies to manage
 - 🎯 **Git Integration**: Seamless integration with Git hooks
-- 🛡️ **Type Safe**: Built with Rust's safety guarantees
+- 🛡️ **Type Safe**: Built with Rust's compile-time safety guarantees
 - 🌍 **Cross Platform**: Works on macOS, Linux, and Windows
 
 ## 📦 Installation
 
 ```bash
-npm install --save-dev rusky
+npm install --save-dev @gunw.dan/rusky
 ```
+
+That's it! No additional dependencies, no complex setup. rusky works exactly like husky but with zero runtime dependencies.
 
 ## 🚀 Quick Start
 
 1. Initialize rusky in your project:
 ```bash
-npx rusky init
+npx @gunw.dan/rusky init
 ```
 
 2. Add a git hook:
 ```bash
-npx rusky add pre-commit "npm test"
+npx @gunw.dan/rusky add pre-commit "npm test"
 ```
 
 3. Add more hooks as needed:
 ```bash
-npx rusky add pre-push "npm run lint"
-npx rusky add commit-msg "npx commitlint --edit $1"
+npx @gunw.dan/rusky add pre-push "npm run lint"
+npx @gunw.dan/rusky add commit-msg "npx commitlint --edit $1"
 ```
 
 ## 📚 Commands
@@ -44,43 +46,43 @@ npx rusky add commit-msg "npx commitlint --edit $1"
 Initialize rusky in your project. This creates a `.rusky` directory and sets up the git hooks directory.
 
 ```bash
-npx rusky init
+npx @gunw.dan/rusky init
 ```
 
 ### `rusky add <hook> <command>`
 Add a git hook with the specified command.
 
 ```bash
-npx rusky add pre-commit "npm test"
-npx rusky add pre-push "npm run build"
+npx @gunw.dan/rusky add pre-commit "npm test"
+npx @gunw.dan/rusky add pre-push "npm run build"
 ```
 
 ### `rusky remove <hook>`
 Remove a git hook.
 
 ```bash
-npx rusky remove pre-commit
+npx @gunw.dan/rusky remove pre-commit
 ```
 
 ### `rusky list`
 List all configured hooks.
 
 ```bash
-npx rusky list
+npx @gunw.dan/rusky list
 ```
 
 ### `rusky install`
 Install all configured git hooks.
 
 ```bash
-npx rusky install
+npx @gunw.dan/rusky install
 ```
 
 ### `rusky uninstall`
 Uninstall all git hooks managed by rusky.
 
 ```bash
-npx rusky uninstall
+npx @gunw.dan/rusky uninstall
 ```
 
 ## 🎯 Supported Git Hooks
@@ -117,15 +119,20 @@ rusky stores its configuration in `.rusky/config.json`:
 }
 ```
 
-## 🆚 Why rusky over husky?
+## 🆚 Why choose rusky?
+
+**Simple, reliable, and dependency-free Git hooks management**
 
 | Feature | rusky | husky |
 |---------|-------|-------|
-| **Performance** | ⚡ Rust-powered | 🐌 Node.js |
-| **Dependencies** | 📦 Zero runtime deps | 📚 Multiple deps |
-| **Binary Size** | 🪶 ~2MB | 📦 ~20MB+ |
-| **Startup Time** | ⚡ <1ms | 🐌 ~100ms |
-| **Memory Usage** | 🧠 ~1MB | 🧠 ~20MB+ |
+| **Setup** | 🚀 One command | 📚 Multiple steps |
+| **Dependencies** | 🚫 Zero runtime | 📦 Multiple Node.js deps |
+| **Learning Curve** | 📖 Same as husky | 📖 Same as rusky |
+| **Maintenance** | 🔧 Less to manage | 🔧 More dependencies |
+| **Language** | 🦀 Rust | 📜 Node.js |
+| **Type Safety** | 🛡️ Compile-time | ⚠️ Runtime |
+
+> **Perfect for**: Teams who want the same husky experience with fewer dependencies and simpler maintenance.
 
 ## 🛠️ Development
 
