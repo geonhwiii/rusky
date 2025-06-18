@@ -1,5 +1,5 @@
 {
-  "name": "rusky",
+  "name": "@geonhwiii/rusky",
   "version": "0.1.0",
   "description": "Fast Git hooks manager written in Rust - A high-performance alternative to husky",
   "main": "index.js",
@@ -22,7 +22,7 @@
     "pre-commit",
     "pre-push"
   ],
-  "author": "Dan <dan@example.com>",
+  "author": "geonhwiii <geonhwiii@github.com>",
   "license": "MIT",
   "repository": {
     "type": "git",

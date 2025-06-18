@@ -195,7 +195,7 @@ rusky includes comprehensive test coverage:
 
 ## 📄 License
 
-MIT © [Dan](https://github.com/dan)
+MIT © [geonhwiii](https://github.com/geonhwiii)
 
 ## 🤝 Contributing
 
@@ -209,4 +209,4 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ---
 
-Made with ❤️ and 🦀 by [Dan](https://github.com/dan) 
+Made with ❤️ and 🦀 by [geonhwiii](https://github.com/geonhwiii) 
