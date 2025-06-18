@@ -137,7 +137,7 @@ rusky stores its configuration in `.rusky/config.json`:
 
 ```bash
 # Clone the repository
-git clone https://github.com/dan/rusky.git
+git clone https://github.com/geonhwiii/rusky.git
 cd rusky
 
 # Build the project
