@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="logo.png" alt="rusky logo" width="200"/>
+</p>
+
 # 🐺 rusky
 
 **Simple Git hooks manager written in Rust** - A dependency-free alternative to husky
